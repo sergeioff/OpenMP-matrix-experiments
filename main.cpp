@@ -5,6 +5,9 @@
 #include <ctime>
 #include <iostream>
 
+#define MULT_SIZE 1000
+#define TRANSP_SIZE 10000
+
 int threadsNum;
 
 using std::vector;
@@ -90,22 +93,21 @@ void Matrix::showMatrix() {
 }
 
 int main (int argc, char *argv[]) {
-    cout << "Enter threads num: ";
+    cout << "Enter number of threads: ";
     cin >> threadsNum;
-/*
-    Matrix matrix(1000, true);
-    Matrix secondMatrix(1000, true);
+    
+    Matrix matrix(MULT_SIZE, true);
+    Matrix secondMatrix(MULT_SIZE, true);
   
+    cout << "Multiplying...\n";
     double time = omp_get_wtime();  
     Matrix result = matrix.multiply(secondMatrix);
     time = omp_get_wtime() - time;
-    cout << "\ntime: " << time;
-*/
-//    result.showMatrix();
-    Matrix matrix(10000, true);
-//    matrix.showMatrix();
-    double time = omp_get_wtime();
-    matrix.transport();
-    cout << "\ntime: " << omp_get_wtime() - time;
+    cout << "Time of multiplication: " << time << "\n";
+
+    Matrix transportMatrix(TRANSP_SIZE,true);
+    time = omp_get_wtime();
+    transportMatrix.transport();
+    cout << "Time of transpose: " << omp_get_wtime() - time;
 }
  
