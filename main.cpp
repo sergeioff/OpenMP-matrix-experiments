@@ -4,12 +4,13 @@
 #include <vector>
 #include <ctime>
 #include <iostream>
+#include <cstdlib>
 
 int threadsNum;
 
 using std::vector;
 using std::cout;
-using std::cin;
+using std::atoi;
 
 class Matrix {
     public:
@@ -90,12 +91,15 @@ void Matrix::showMatrix() {
 }
 
 int main (int argc, char *argv[]) {
-    cout << "Enter matrix size: ";
-    int SIZE;
-    cin >> SIZE;
+    if (argc != 3) {
+        cout << "Usage: " << argv[0] << " matrixSize numberOfThreads" << "\n";
+        return -1;
+    }
 
-    cout << "Enter number of threads: ";
-    cin >> threadsNum;
+    const int SIZE = atoi(argv[1]);
+    threadsNum = atoi(argv[2]);
+    cout << "Matrix size: " << SIZE << "x" << SIZE << "\n";
+    cout << "Number of threads: " << threadsNum << "\n";
     
     Matrix matrix(SIZE, true);
     Matrix secondMatrix(SIZE, true);
@@ -109,6 +113,6 @@ int main (int argc, char *argv[]) {
     Matrix transportMatrix(SIZE,true);
     time = omp_get_wtime();
     transportMatrix.transport();
-    cout << "Time of transpose: " << omp_get_wtime() - time;
+    cout << "Time of transpose: " << omp_get_wtime() - time << "\n";
 }
  
